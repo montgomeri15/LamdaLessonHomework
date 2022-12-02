@@ -1,38 +1,45 @@
 package org.example;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
-/**
- * Unit test for simple App.
- */
-public class AppTest 
-    extends TestCase
-{
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
+public class AppTest {
+
+    @DisplayName("Number is prime")
+    @ParameterizedTest
+    @ValueSource(ints = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29})
+    void testNumberIsPrime(int testNumber) {
+        FunctionalInterfeces functionalInterfeces = new FunctionalInterfeces();
+        assertThat(functionalInterfeces.isPrime(testNumber)).isTrue();
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
+    @DisplayName("Number isn't prime")
+    @ParameterizedTest
+    @ValueSource(ints = {4, 6, 8, 9, 10, 12, 14, 15, 16, 18})
+    void testNumberIsNotPrime(int testNumber) {
+        FunctionalInterfeces functionalInterfeces = new FunctionalInterfeces();
+        assertThat(functionalInterfeces.isPrime(testNumber)).isFalse();
     }
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
+    @Test
+    @DisplayName("Random number is correct")
+    void testCorrectRandomNumber() {
+        FunctionalInterfeces functionalInterfeces = new FunctionalInterfeces();
+        ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outputStreamCaptor));
+
+        functionalInterfeces.luckyNumber(5);
+
+        assertThat(outputStreamCaptor.toString()).isNotEmpty()
+                .containsAnyOf("0", "1", "2", "3", "4", "5");
     }
+
+
 }
