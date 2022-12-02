@@ -9,6 +9,6 @@ public class App {
         functionalInterfeces.luckyNumber(10);
         System.out.println(functionalInterfeces.dayOfWeek());
         System.out.println(functionalInterfeces.roundedNumber(20.45));
-        functionalInterfeces.fibonacciSeries(5);
+        functionalInterfeces.fibonacciSeries(10);
     }
 }
